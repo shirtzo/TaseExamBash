@@ -19,7 +19,6 @@ while getopts ":hvr" opt; do
         case ${opt} in
             h)
                 show_help_menu
-                exit 0
                 ;;
             r)
                 recursive=true
@@ -29,11 +28,12 @@ while getopts ":hvr" opt; do
                 ;;
             *)
                 echo "Invalid option"
-                show_help_menu
                 exit 1
                 ;;
         esac
     done
+
+shift $((OPTIND -1))
 
 check_file_type() {
     echo "$(file -b "$1")"
