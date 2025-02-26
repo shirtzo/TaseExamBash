@@ -93,5 +93,5 @@ extract() {
 for user_input in "$@"; do
     extract "$user_input"
 done
-    echo "$un_decompressed_files_counter"
-    exit $decompressed_files_counter
+    echo "$decompressed_files_counter"
+    exit $un_decompressed_files_counter
