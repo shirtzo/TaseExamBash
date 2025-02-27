@@ -89,6 +89,10 @@ extract() {
     fi
 }
 
+return_un_decompressed_files() {
+   return $un_decompressed_files_counter
+}
+
 if [ "$#" -eq 0 ]; then
    echo "Empty input! try again."
 
@@ -103,4 +107,3 @@ else
 fi
 
 echo "Number of files decompressed: $decompressed_files_counter"
-exit $un_decompressed_files_counter
