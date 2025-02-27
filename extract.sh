@@ -3,7 +3,7 @@
 recursive=false
 verbose=false
 
-file_types_and_commands=("gzip:gunzip:-f" "bzip2:bunzip2:-f" "Zip:unzip:-o" "compress:uncompress:-f")
+file_types_and_commands=("gzip:gunzip:-f" "bzip2:bunzip2:-f" "Zip:unzip:-o" "compress:uncompress:-f" "tar:tar:-xvf")
 IFS=":"
 decompressed_files_counter=0
 un_decompressed_files_counter=0
@@ -47,7 +47,6 @@ execute_unpack_command() {
   $cmd $flag "$file"
 }
 
-
 unpack_file() {
 local file="$1"
 local file_type=$(check_file_type "$file")
@@ -90,8 +89,21 @@ extract() {
     fi
 }
 
-for user_input in "$@"; do
-    extract "$user_input"
-done
-    echo "$decompressed_files_counter"
-    exit $un_decompressed_files_counter
+return_un_decompressed_files() {
+   return $un_decompressed_files_counter
+}
+
+if [ "$#" -eq 0 ]; then
+   echo "Empty input! try again."
+
+else
+   for user_input in "$@"; do
+       if [ ! -e "$user_input" ]; then
+          echo "File or folder with the name $user_input doesn't exist! try again."
+       else
+          extract "$user_input"
+       fi
+   done
+fi
+
+echo "Number of files decompressed: $decompressed_files_counter"
